@@ -46,6 +46,7 @@ if __name__ == '__main__':
 
     configFile = ConfigParser.RawConfigParser()
     configFile.read(options.configFile)
+    print(f"Configuration file loaded: {configFile}")
     try:
         logConfFile = configFile.get('logging', 'configFile')
         if (logConfFile):
