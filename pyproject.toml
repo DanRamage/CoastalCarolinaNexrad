@@ -1,0 +1,13 @@
+[project]
+name = "horrycountynexrad"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "geojson>=3.2.0",
+    "lxml>=6.0.2",
+    "xmrgprocessing",
+]
+
+[tool.uv.sources]
+xmrgprocessing = { git = "https://github.com/DanRamage/xmrgprocessing.git" }
