@@ -12,6 +12,8 @@ import configparser as ConfigParser
 import optparse
 import logging.config
 import time
+import traceback
+
 from pytz import timezone
 from datetime import datetime, timedelta
 from pytz import timezone
@@ -32,26 +34,27 @@ if __name__ == '__main__':
 
     logger = None
 
+    parser = optparse.OptionParser()
+    parser.add_option("--ConfigFile", dest="configFile",
+                      help="INI file containing various parameters for processing.")
+    parser.add_option("--DateToProcess", dest="date_to_process", default=None,
+                      help="If provided, this is the date we process back from.")
+    parser.add_option("--HoursToProcess", dest="hours_to_process", type="int", default=24,
+                      help="If provided, this is the number of hours we process back.")
+
+    (options, args) = parser.parse_args()
+
+    configFile = ConfigParser.RawConfigParser()
+    configFile.read(options.configFile)
     try:
-        parser = optparse.OptionParser()
-        parser.add_option("--ConfigFile", dest="configFile",
-                          help="INI file containing various parameters for processing.")
-        parser.add_option("--DateToProcess", dest="date_to_process", default=None,
-                          help="If provided, this is the date we process back from.")
-        parser.add_option("--HoursToProcess", dest="hours_to_process", type="int", default=24,
-                          help="If provided, this is the number of hours we process back.")
-
-        (options, args) = parser.parse_args()
-
-        configFile = ConfigParser.RawConfigParser()
-        configFile.read(options.configFile)
-
         logConfFile = configFile.get('logging', 'configFile')
         if (logConfFile):
             logging.config.fileConfig(logConfFile)
             logger = logging.getLogger("horrycnt_nexrad_proc_logger")
             logger.info("Session started")
-
+    except Exception as e:
+        traceback.print_exc()
+    else:
         try:
             watershed_list = configFile.get("settings", "watersheds")
         except ConfigParser.Error as e:
@@ -174,7 +177,4 @@ if __name__ == '__main__':
 
             logger.info(f"Processing completed in: {time.time() - start_time} seconds.")
 
-
-    except Exception as e:
-        logger.exception(e)
 
