@@ -124,6 +124,10 @@ if __name__ == '__main__':
                     output_directory.mkdir(parents=True, exist_ok=True)
                     outputFilename = configFile.get(watershed, 'OutputFile')
 
+                    #Directory to save any debug files we create.
+                    debug_output_directory = Path(configFile.get(watershed, 'DebugOutputDirectory'))
+                    debug_output_directory.mkdir(parents=True, exist_ok=True)
+
                     create_hourly_file = configFile.getboolean(watershed, 'create_hourly_file')
 
                     save_all_precip_values = configFile.getboolean(watershed, 'save_all_precip_values')
@@ -165,9 +169,9 @@ if __name__ == '__main__':
                         unique_id=task_id,
                         source_file_working_directory=nexrad_data_dir,
                         output_directory=output_directory,
-                        base_log_output_directory=output_directory,
+                        base_log_output_directory=debug_output_directory,
                         results_directory=output_directory,
-                        kml_output_directory=output_directory,
+                        kml_output_directory=debug_output_directory,
                         save_all_precip_values=save_all_precip_values,
                         delete_source_file=remove_raw_nexrad_files,
                         delete_compressed_source_file=remove_raw_nexrad_files)
