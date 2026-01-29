@@ -12,8 +12,7 @@ class KMLHUCBoundaryParser(BoundaryParser):
         try:
             kmlFile = open(filename, 'r')
         except Exception as e:
-            if (self.logger):
-                self.logger.exception(e)
+            self._logger.exception(e)
         else:
             try:
                 kmlRoot = objectify.parse(kmlFile).getroot()
