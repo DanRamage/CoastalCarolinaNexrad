@@ -6,6 +6,7 @@ requires-python = ">=3.11"
 dependencies = [
     "geojson>=3.2.0",
     "lxml>=6.0.2",
+    "pydevd-pycharm>=261.17801.91",
     "xmrgprocessing",
 ]
 

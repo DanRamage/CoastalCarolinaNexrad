@@ -27,6 +27,8 @@ from xmrgprocessing.xmrgfileiterator.xmrg_file_iterator import xmrg_file_iterato
 from xmrgprocessing.archive.nfs_mount_utils import check_mount_exists, mount_nfs
 from uuid import uuid4
 
+import pydevd_pycharm
+pydevd_pycharm.settrace('localhost', port=1024, stdout_to_server=True, stderr_to_server=True)
 # Data Processing flags
 WORKER_COUNT = 4
 if __name__ == '__main__':
